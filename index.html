@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pawfect Care - Premium Dog Products</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Cormorant+Garamond:wght@300;400;500;600&display=swap');
+
+        :root {
+            --color-primary: #1a1a1a;
+            --color-secondary: #8b7355;
+            --color-accent: #d4af37;
+            --color-bg: #ffffff;
+            --color-text: #1a1a1a;
+            --color-text-light: #6b6b6b;
+            --font-primary: 'Cormorant Garamond', serif;
+            --font-heading: 'Playfair Display', serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-primary);
+            color: var(--color-text);
+            overflow-x: hidden;
+            font-size: 18px;
+            letter-spacing: 0.3px;
+        }
+
+        /* Video Background */
+        .video-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .video-background video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.3;
+            filter: brightness(0.7);
+        }
+
+        .video-background::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.9) 100%);
+        }
+
+        /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            padding: 20px 0;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 40px;
+        }
+
+        .logo {
+            font-size: 32px;
+            font-weight: 600;
+            color: var(--color-primary);
+            letter-spacing: 2px;
+            font-family: var(--font-heading);
+        }
+
+        .logo span {
+            color: var(--color-secondary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 35px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--color-text);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 15px;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--color-secondary);
+        }
+
+        /* Hero Section */
+        .hero {
+            max-width: 1200px;
+            margin: 80px auto 60px;
+            padding: 0 40px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 64px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--color-primary);
+            letter-spacing: -0.5px;
+            font-family: var(--font-heading);
+        }
+
+        .hero p {
+            font-size: 22px;
+            color: var(--color-text-light);
+            max-width: 600px;
+            margin: 0 auto 40px;
+            line-height: 1.8;
+            font-weight: 300;
+        }
+
+        /* Products Section */
+        .products {
+            max-width: 1200px;
+            margin: 0 auto 80px;
+            padding: 0 40px;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 40px;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.12);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            background: #f8f9fa;
+        }
+
+        .product-info {
+            padding: 30px;
+        }
+
+        .product-title {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--color-primary);
+            font-family: var(--font-heading);
+            letter-spacing: 0.5px;
+        }
+
+        .product-description {
+            color: var(--color-text-light);
+            line-height: 1.6;
+            margin-bottom: 20px;
+            font-size: 15px;
+        }
+
+        .product-features {
+            list-style: none;
+            margin-bottom: 25px;
+        }
+
+        .product-features li {
+            padding: 8px 0;
+            color: var(--color-text-light);
+            font-size: 14px;
+        }
+
+        .product-features li::before {
+            content: '✓';
+            color: var(--color-secondary);
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .product-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 20px;
+            border-top: 1px solid #ecf0f1;
+        }
+
+        .price {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--color-primary);
+        }
+
+        .btn-primary {
+            background: var(--color-secondary);
+            color: white;
+            border: none;
+            padding: 14px 32px;
+            border-radius: 50px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-primary:hover {
+            background: #2980b9;
+            transform: scale(1.05);
+        }
+
+        /* Features Section */
+        .features {
+            max-width: 1200px;
+            margin: 80px auto;
+            padding: 60px 40px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.06);
+        }
+
+        .features h2 {
+            text-align: center;
+            font-size: 42px;
+            margin-bottom: 50px;
+            color: var(--color-primary);
+            font-family: var(--font-heading);
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+        }
+
+        .feature-item {
+            text-align: center;
+        }
+
+        .feature-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        .feature-item h3 {
+            font-size: 22px;
+            margin-bottom: 12px;
+            color: var(--color-primary);
+            font-family: var(--font-heading);
+            font-weight: 600;
+        }
+
+        .feature-item p {
+            color: var(--color-text-light);
+            line-height: 1.6;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--color-primary);
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        footer p {
+            margin-bottom: 10px;
+        }
+
+        footer a {
+            color: var(--color-secondary);
+            text-decoration: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 36px;
+            }
+
+            .hero p {
+                font-size: 16px;
+            }
+
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-links {
+                gap: 20px;
+            }
+
+            nav {
+                flex-direction: column;
+                gap: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Video Background -->
+    <div class="video-background">
+        <video autoplay muted loop playsinline>
+            <source src="https://cdn.pixabay.com/video/2024/04/17/208053_large.mp4" type="video/mp4">
+        </video>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <nav>
+            <div class="logo">Pawfect<span>Care</span></div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#products">Products</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <h1>Premium Care for Your Best Friend</h1>
+        <p>Discover our curated collection of high-quality dog products designed to keep your furry companion happy, healthy, and looking their best.</p>
+    </section>
+
+    <!-- Products Section -->
+    <section class="products" id="products">
+        <div class="products-grid">
+            <!-- Product 1: Self-Cleaning Brush -->
+            <div class="product-card">
+                <img src="https://agi-prod-file-upload-public-main-use1.s3.amazonaws.com/3b614a7b-f991-4d60-8f70-0e77d521f005" alt="Self-Cleaning Dog Brush" class="product-image">
+                <div class="product-info">
+                    <h3 class="product-title">Self-Cleaning Dog Brush</h3>
+                    <p class="product-description">Professional-grade grooming tool with one-click fur release. Gentle on your dog's coat while effectively removing loose hair, tangles, and dirt.</p>
+                    <ul class="product-features">
+                        <li>Ergonomic anti-slip handle for comfortable grooming</li>
+                        <li>Self-cleaning button for easy hair removal</li>
+                        <li>Suitable for all coat types and breeds</li>
+                        <li>Reduces shedding by up to 90%</li>
+                    </ul>
+                    <div class="product-footer">
+                        <span class="price">₹399</span>
+                        <button class="btn-primary" onclick="addToCart('Self-Cleaning Dog Brush')">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product 2: Portable Water Bottle -->
+            <div class="product-card">
+                <img src="https://agi-prod-file-upload-public-main-use1.s3.amazonaws.com/8b8e8e7e-93d7-485a-a4f5-05af4810bc26" alt="Portable Dog Water Bottle" class="product-image">
+                <div class="product-info">
+                    <h3 class="product-title">Portable Dog Water Bottle</h3>
+                    <p class="product-description">Leak-proof travel water bottle with built-in bowl. Perfect for walks, hikes, and outdoor adventures with your furry friend.</p>
+                    <ul class="product-features">
+                        <li>BPA-free, food-grade safe materials</li>
+                        <li>One-hand operation with lock button</li>
+                        <li>350ml capacity - perfect for on-the-go</li>
+                        <li>Easy-clean detachable design</li>
+                    </ul>
+                    <div class="product-footer">
+                        <span class="price">₹499</span>
+                        <button class="btn-primary" onclick="addToCart('Portable Dog Water Bottle')">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="about">
+        <h2>Why Choose PawfectCare?</h2>
+        <div class="features-grid">
+            <div class="feature-item">
+                <div class="feature-icon">🚚</div>
+                <h3>Fast Shipping</h3>
+                <p>Free delivery on orders over ₹999. Get your products delivered within 3-5 business days.</p>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">✨</div>
+                <h3>Premium Quality</h3>
+                <p>All products are carefully selected and tested to ensure the highest quality for your pets.</p>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">💯</div>
+                <h3>100% Guarantee</h3>
+                <p>Not satisfied? Return within 30 days for a full refund. Your pet's happiness is our priority.</p>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">💬</div>
+                <h3>24/7 Support</h3>
+                <p>Our dedicated customer service team is always here to help with any questions or concerns.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <p>&copy; 2025 PawfectCare. All rights reserved.</p>
+        <p>Phone: <a href="tel:+918779495771">+91-8779495771</a></p>
+    </footer>
+
+    <script>
+        function addToCart(productName) {
+            alert(`${productName} has been added to your cart! 🐾\n\nThank you for shopping with PawfectCare!`);
+        }
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+
